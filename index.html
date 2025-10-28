@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>دورة الصيانة المنزلية</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="config.js"></script>
+  <script defer src="script.js"></script>
+  <meta name="description" content="منصة تدريبية لدورة الصيانة المنزلية - قسم البرامج التنموية بمركز المزروعية - جمعية البر بالأحساء">
+</head>
+<body>
+  <header>
+    <div>
+      <h1>قسم البرامج التنموية - مركز المزروعية - جمعية البر بالأحساء</h1>
+      <div class="subtitle">جميع الحقوق محفوظة - بدر الحويل 0563809007</div>
+    </div>
+    <img src="assets/logo.png" alt="شعار المركز">
+  </header>
+
+  <!-- صفحة التسجيل -->
+  <section class="container" id="page-form">
+    <h2>ابدأ دورة الصيانة المنزلية</h2>
+    <div class="form-grid">
+      <div>
+        <label for="name">الاسم الرباعي بالعربي</label>
+        <input id="name" type="text" placeholder="مثال: بدر محمد الحويل" required>
+      </div>
+      <div>
+        <label for="idNumber">رقم الهوية الوطنية (سعودية فقط)</label>
+        <input id="idNumber" type="text" inputmode="numeric" pattern="^[12]\d{9}$" placeholder="10 أرقام" required>
+      </div>
+      <div>
+        <label for="phone">رقم الجوال</label>
+        <input id="phone" type="tel" pattern="^05\d{8}$" placeholder="05XXXXXXXX" required>
+      </div>
+      <div>
+        <label for="email">البريد الإلكتروني</label>
+        <input id="email" type="email" placeholder="name@example.com" required>
+      </div>
+      <div>
+        <label for="birthdate">تاريخ الميلاد</label>
+        <input id="birthdate" type="date" required>
+      </div>
+    </div>
+    <div class="buttons">
+      <button id="startBtn">ابدأ الدورة</button>
+    </div>
+    <div class="note">تتوهج الحقول باللون الأخضر عند التفعيل ✨</div>
+  </section>
+
+  <!-- الفيديو الأول -->
+  <section class="container hidden" id="page-video1">
+    <h3>الفيديو الأول</h3>
+    <iframe src="https://www.youtube.com/embed/vDKIZSDhw7o?si=6_5S4QQSuybIhpdt" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <div class="buttons">
+      <button id="nextVideo1">التالي</button>
+    </div>
+  </section>
+
+  <!-- الفيديو الثاني -->
+  <section class="container hidden" id="page-video2">
+    <h3>الفيديو الثاني</h3>
+    <iframe src="https://www.youtube.com/embed/c-w7DCEjQb4?si=ruS7cfqmHACuLFH5" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <div class="buttons">
+      <button id="nextVideo2">التالي</button>
+    </div>
+  </section>
+
+  <!-- الاختبار -->
+  <section class="container hidden" id="page-quiz">
+    <h3>اختبار من 3 أسئلة (صح/خطأ)</h3>
+    <div>
+      <p>1- يجب فصل التيار الكهربائي للجهاز المراد صيانته</p>
+      <label><input type="radio" name="q1" value="نعم"> نعم</label>
+      <label><input type="radio" name="q1" value="لا"> لا</label>
+    </div>
+    <div>
+      <p>2- يجب لبس القفاز وأدوات السلامة قبل البدء في الصيانة</p>
+      <label><input type="radio" name="q2" value="نعم"> نعم</label>
+      <label><input type="radio" name="q2" value="لا"> لا</label>
+    </div>
+    <div>
+      <p>3- لا بأس من وجود الأطفال بالقرب منك أثناء الصيانة</p>
+      <label><input type="radio" name="q3" value="صح"> صح</label>
+      <label><input type="radio" name="q3" value="خطأ"> خطأ</label>
+    </div>
+    <div class="buttons">
+      <button id="resultBtn">عرض النتيجة</button>
+      <button id="goRate" disabled>الانتقال للتقييم</button>
+    </div>
+    <p id="result"></p>
+    <p id="resultNote"></p>
+  </section>
+
+  <!-- التقييم -->
+  <section class="container hidden" id="page-rating">
+    <h3>تقييم الدورة</h3>
+    <p>ما مدى رضاك عن مقدم الدورة؟</p>
+    <div class="range-wrap">
+      <span class="emoji">😞</span>
+      <input type="range" min="1" max="5" step="1" id="rate1" value="3">
+      <span class="emoji">😊</span>
+    </div>
+    <p>ما مدى رضاك عن محتوى الدورة؟</p>
+    <div class="range-wrap">
+      <span class="emoji">😞</span>
+      <input type="range" min="1" max="5" step="1" id="rate2" value="3">
+      <span class="emoji">😊</span>
+    </div>
+    <div class="buttons">
+      <button id="finishBtn">إنهاء الدورة</button>
+    </div>
+  </section>
+
+  <!-- صفحة الإنهاء -->
+  <section class="container hidden" id="page-done">
+    <h3>شكرًا لمشاركتك!</h3>
+    <p>تم حفظ إدخالاتك بنجاح.</p>
+    <div id="saveStatus"></div>
+    <p><small>يمكنك إغلاق الصفحة الآن.</small></p>
+  </section>
+
+  <div class="admin-fab" title="الإدارة" onclick="openAdmin()">⚙️</div>
+
+  <footer>
+    جميع الحقوق محفوظة - بدر الحويل 0563809007
+  </footer>
+</body>
+</html>

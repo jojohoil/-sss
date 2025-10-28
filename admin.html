@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>إدارة الدورة</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- SheetJS CDN لتصدير Excel -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>قسم البرامج التنموية - مركز المزروعية - جمعية البر بالأحساء</h1>
+      <div class="subtitle">لوحة إدارة الدورة</div>
+    </div>
+    <img src="assets/logo.png" alt="شعار المركز">
+  </header>
+
+  <section class="container">
+    <h2>الردود المحفوظة (محليًا)</h2>
+    <div class="buttons">
+      <button id="refresh">تحديث</button>
+      <button id="exportExcel">تصدير إلى Excel</button>
+      <button id="exportJSON">تصدير JSON</button>
+      <a href="index.html"><button>العودة للواجهة</button></a>
+    </div>
+    <div id="count"></div>
+    <div style="overflow:auto">
+      <table class="table" id="tbl">
+        <thead>
+          <tr>
+            <th>الاسم</th><th>الهوية</th><th>الجوال</th><th>البريد</th><th>الميلاد</th>
+            <th>إجابة1</th><th>إجابة2</th><th>إجابة3</th><th>النتيجة</th>
+            <th>تقييم مقدم</th><th>تقييم محتوى</th><th>وقت الإنهاء</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <p class="note">** يدعم العربية بالكامل. في حال استخدام Google Sheets ستظهر البيانات هناك أيضًا.</p>
+  </section>
+
+  <footer>جميع الحقوق محفوظة - بدر الحويل 0563809007</footer>
+
+<script>
+function load(){
+  const list = JSON.parse(localStorage.getItem("hm_responses") || "[]");
+  const tbody = document.querySelector("#tbl tbody");
+  tbody.innerHTML = "";
+  list.forEach(r=>{
+    const tr = document.createElement("tr");
+    tr.innerHTML = \`
+      <td>\${r.name||""}</td>
+      <td>\${r.id||""}</td>
+      <td>\${r.phone||""}</td>
+      <td>\${r.email||""}</td>
+      <td>\${r.birth||""}</td>
+      <td>\${r.quiz?.q1||""}</td>
+      <td>\${r.quiz?.q2||""}</td>
+      <td>\${r.quiz?.q3||""}</td>
+      <td>\${r.score||""}</td>
+      <td>\${r.ratings?.presenter||""}</td>
+      <td>\${r.ratings?.content||""}</td>
+      <td>\${r.finished_at||""}</td>
+    \`;
+    tbody.appendChild(tr);
+  });
+  document.getElementById("count").innerHTML = `<small>عدد السجلات: ${list.length}</small>`;
+}
+
+function toExcel(){
+  const list = JSON.parse(localStorage.getItem("hm_responses") || "[]");
+  const rows = [["الاسم","الهوية","الجوال","البريد","الميلاد","إجابة1","إجابة2","إجابة3","النتيجة","تقييم مقدم","تقييم محتوى","وقت الإنهاء"]];
+  list.forEach(r=>{
+    rows.push([r.name||"",r.id||"",r.phone||"",r.email||"",r.birth||"",r.quiz?.q1||"",r.quiz?.q2||"",r.quiz?.q3||"",r.score||"",r.ratings?.presenter||"",r.ratings?.content||"",r.finished_at||""]);
+  });
+  const ws = XLSX.utils.aoa_to_sheet(rows);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "الردود");
+  XLSX.writeFile(wb, "home_maintenance_responses.xlsx");
+}
+
+function toJSON(){
+  const list = localStorage.getItem("hm_responses") || "[]";
+  const blob = new Blob([list], {type:"application/json;charset=utf-8"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "home_maintenance_responses.json";
+  a.click();
+}
+
+document.getElementById("refresh").addEventListener("click", load);
+document.getElementById("exportExcel").addEventListener("click", toExcel);
+document.getElementById("exportJSON").addEventListener("click", toJSON);
+load();
+</script>
+</body>
+</html>
